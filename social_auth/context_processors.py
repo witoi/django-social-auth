@@ -25,7 +25,7 @@ def social_auth_by_type_backends(request):
     return {'social_auth': data}
 
 
-def backends_data(user):
+def backends_data(request):
     """Return backends data for given user.
 
     Will return a dict with values:
@@ -42,8 +42,8 @@ def backends_data(user):
               'not_associated': available,
               'backends': available}
 
-    if user.is_authenticated():
-        associated = user.social_auth.all()
+    if request.user.is_authenticated():
+        associated = request.user.social_auth.all()
         not_associated = list(set(available) -
                               set(assoc.provider for assoc in associated))
         values['associated'] = associated
